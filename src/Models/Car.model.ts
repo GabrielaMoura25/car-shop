@@ -1,5 +1,5 @@
 import { Model, Schema, model, models } from 'mongoose';
-import Icar from '../Interfaces/Car.interface';
+import Icar from '../Interfaces/Icar';
 
 export default class CarModel {
   private _model: Model<Icar>;
