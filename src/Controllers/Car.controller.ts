@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import Icar from '../Interfaces/Icar';
+import Icar from '../Interfaces/ICar';
 import CarService from '../Services/Car.service';
 
 export default class CarController {
@@ -23,7 +23,7 @@ export default class CarController {
 
       return this._res.status(201).json(carCreated);
     } catch (error) {
-      return this._res.status(500).json(error);
+      this._next(error);
     }
   }
 }

@@ -1,5 +1,5 @@
 import Car from '../Domains/Car';
-import Icar from '../Interfaces/Icar';
+import Icar from '../Interfaces/ICar';
 import CarModel from '../Models/Car.model';
 
 export default class CarService {
