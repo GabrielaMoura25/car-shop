@@ -3,6 +3,11 @@ import CarController from '../Controllers/Car.controller';
 
 const router = Router();
 
+router.put('/:id', (req, res, next) => {
+  const carController = new CarController(req, res, next);
+
+  return carController.updateById();
+});
 router.get('/:id', (req, res, next) => {
   const carController = new CarController(req, res, next);
 

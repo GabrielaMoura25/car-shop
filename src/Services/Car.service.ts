@@ -29,4 +29,11 @@ export default class CarService {
     if (!car) return { status: 404, response: { message: 'Car not found' } };
     return { status: 200, response: this.createCarDomain(car) };
   }
+
+  public async updateById(id: string, car: ICar) {
+    if (!isValidObjectId(id)) return { status: 422, response: { message: 'Invalid mongo id' } };
+    const carUpdated = await this._carModel.updateById(id, car);
+    if (!carUpdated) return { status: 404, response: { message: 'Car not found' } };
+    return { status: 200, response: this.createCarDomain(carUpdated) };
+  }
 }
