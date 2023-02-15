@@ -29,4 +29,11 @@ export default class MotorcycleService {
     if (!motorcycle) return { status: 404, response: { message: 'Motorcycle not found' } };
     return { status: 200, response: this.createMotorcycleDomain(motorcycle) };
   }
+
+  public async updateById(id: string, motorcycle: IMotorcycle) {
+    if (!isValidObjectId(id)) return { status: 422, response: { message: 'Invalid mongo id' } };
+    const motorcycleUpdated = await this.motorcycleModel.updateById(id, motorcycle);
+    if (!motorcycleUpdated) return { status: 404, response: { message: 'Motorcycle not found' } };
+    return { status: 200, response: this.createMotorcycleDomain(motorcycleUpdated) };
+  }
 }

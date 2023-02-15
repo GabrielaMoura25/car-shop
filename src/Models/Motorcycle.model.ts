@@ -27,4 +27,8 @@ export default class MotorcycleModel extends AbstractODM<IMotorcycle> {
   public async findById(id: string): Promise<IMotorcycle | null> {
     return this.model.findOne({ _id: new ObjectId(id) });
   }
+
+  public async updateById(id: string, motorcycle: IMotorcycle): Promise<IMotorcycle | null> {
+    return this.model.findOneAndUpdate({ _id: new ObjectId(id) }, { ...motorcycle }, { new: true });
+  }
 }
