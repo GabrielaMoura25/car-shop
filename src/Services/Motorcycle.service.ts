@@ -3,6 +3,9 @@ import Motorcycle from '../Domains/Motorcycle';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotorcycleModel from '../Models/Motorcycle.model';
 
+const invalid = { status: 422, response: { message: 'Invalid mongo id' } };
+const notFound = { status: 404, response: { message: 'Motorcycle not found' } };
+
 export default class MotorcycleService {
   private motorcycleModel = new MotorcycleModel();
 
@@ -24,16 +27,23 @@ export default class MotorcycleService {
   }
 
   public async findById(id: string) {
-    if (!isValidObjectId(id)) return { status: 422, response: { message: 'Invalid mongo id' } };
+    if (!isValidObjectId(id)) return invalid;
     const motorcycle = await this.motorcycleModel.findById(id);
-    if (!motorcycle) return { status: 404, response: { message: 'Motorcycle not found' } };
+    if (!motorcycle) return notFound;
     return { status: 200, response: this.createMotorcycleDomain(motorcycle) };
   }
 
   public async updateById(id: string, motorcycle: IMotorcycle) {
-    if (!isValidObjectId(id)) return { status: 422, response: { message: 'Invalid mongo id' } };
+    if (!isValidObjectId(id)) return invalid;
     const motorcycleUpdated = await this.motorcycleModel.updateById(id, motorcycle);
-    if (!motorcycleUpdated) return { status: 404, response: { message: 'Motorcycle not found' } };
+    if (!motorcycleUpdated) return notFound;
     return { status: 200, response: this.createMotorcycleDomain(motorcycleUpdated) };
+  }
+
+  public async deleteById(id: string) {
+    if (!isValidObjectId(id)) return invalid;
+    const motorcycleDeleted = await this.motorcycleModel.deleteById(id);
+    if (!motorcycleDeleted) return notFound;
+    return { status: 204, response: this.createMotorcycleDomain(motorcycleDeleted) };
   }
 }
