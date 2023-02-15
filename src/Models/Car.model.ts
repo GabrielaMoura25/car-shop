@@ -1,12 +1,13 @@
 import { Model, Schema, model, models } from 'mongoose';
-import Icar from '../Interfaces/ICar';
+import { ObjectId } from 'mongodb';
+import ICar from '../Interfaces/ICar';
 
 export default class CarModel {
-  private _model: Model<Icar>;
+  private _model: Model<ICar>;
   private schema: Schema;
 
   constructor() {
-    this.schema = new Schema<Icar>({
+    this.schema = new Schema<ICar>({
       model: { type: String, required: true },
       year: { type: Number, required: true },
       color: { type: String, required: true },
@@ -19,7 +20,15 @@ export default class CarModel {
     this._model = models.Car || model('Car', this.schema);
   }
 
-  public async create(car: Icar): Promise<Icar> {
+  public async create(car: ICar): Promise<ICar> {
     return this._model.create({ ...car });
+  }
+
+  public async findAll(): Promise<ICar[]> {
+    return this._model.find();
+  }
+
+  public async findById(id: string): Promise<ICar | null> {
+    return this._model.findOne({ _id: new ObjectId(id) });
   }
 }
