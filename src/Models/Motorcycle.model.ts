@@ -1,5 +1,4 @@
 import { Schema } from 'mongoose';
-import { ObjectId } from 'mongodb';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import AbstractODM from './AbstractODM';
 
@@ -14,21 +13,5 @@ export default class MotorcycleModel extends AbstractODM<IMotorcycle> {
       category: { type: String, required: true },
       engineCapacity: { type: Number, required: true },
     }));
-  }
-
-  public async create(motorcycle: IMotorcycle): Promise<IMotorcycle> {
-    return this.model.create({ ...motorcycle });
-  }
-
-  public async findAll(): Promise<IMotorcycle[]> {
-    return this.model.find();
-  }
-
-  public async findById(id: string): Promise<IMotorcycle | null> {
-    return this.model.findOne({ _id: new ObjectId(id) });
-  }
-
-  public async updateById(id: string, motorcycle: IMotorcycle): Promise<IMotorcycle | null> {
-    return this.model.findOneAndUpdate({ _id: new ObjectId(id) }, { ...motorcycle }, { new: true });
   }
 }
