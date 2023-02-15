@@ -75,4 +75,21 @@ describe('Car Service', function () {
 
     expect(car).to.be.deep.equal({ status: 404, response });
   });
+
+  it('test method PUT with function "updateById" when id exists', async function () {
+    sinon.stub(Model, 'findOneAndUpdate').resolves({ id: '6348513f34c397abcad040b2', ...reqCar });
+
+    const carService = new CarService();
+    const id = '6348513f34c397abcad040b2';
+    const car = await carService.updateById(id, reqCar);
+
+    expect(car).to.be.an('object');
+    expect(car.response).to.have.property('id');
+    expect(car.response).to.have.property('model');
+    expect(car.response).to.have.property('year');
+    expect(car.response).to.have.property('color');
+    expect(car.response).to.have.property('status');
+    expect(car).to.be.deep.equal({ status: 200, 
+      response: { id, ...reqCar } });
+  });
 });
