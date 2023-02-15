@@ -1,13 +1,11 @@
-import { Model, Schema, model, models } from 'mongoose';
+import { Schema } from 'mongoose';
 import { ObjectId } from 'mongodb';
 import ICar from '../Interfaces/ICar';
+import AbstractODM from './AbstractODM';
 
-export default class CarModel {
-  private _model: Model<ICar>;
-  private schema: Schema;
-
+export default class CarModel extends AbstractODM<ICar> {
   constructor() {
-    this.schema = new Schema<ICar>({
+    super('Car', new Schema<ICar>({
       model: { type: String, required: true },
       year: { type: Number, required: true },
       color: { type: String, required: true },
@@ -15,24 +13,22 @@ export default class CarModel {
       buyValue: { type: Number, required: true },
       doorsQty: { type: Number, required: true },
       seatsQty: { type: Number, required: true },
-    });
-
-    this._model = models.Car || model('Car', this.schema);
+    }));
   }
 
   public async create(car: ICar): Promise<ICar> {
-    return this._model.create({ ...car });
+    return this.model.create({ ...car });
   }
 
   public async findAll(): Promise<ICar[]> {
-    return this._model.find();
+    return this.model.find();
   }
 
   public async findById(id: string): Promise<ICar | null> {
-    return this._model.findOne({ _id: new ObjectId(id) });
+    return this.model.findOne({ _id: new ObjectId(id) });
   }
 
   public async updateById(id: string, car: ICar): Promise<ICar | null> {
-    return this._model.findOneAndUpdate({ _id: new ObjectId(id) }, car, { new: true });
+    return this.model.findOneAndUpdate({ _id: new ObjectId(id) }, car, { new: true });
   }
 }
