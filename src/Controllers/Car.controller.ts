@@ -6,7 +6,7 @@ export default class CarController {
   private _req: Request;
   private _res: Response;
   private _next: NextFunction;
-  private _carService: CarService;
+  public _carService: CarService;
 
   constructor(req: Request, res: Response, next: NextFunction) {
     this._req = req;

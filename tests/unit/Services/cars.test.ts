@@ -38,7 +38,7 @@ describe('Car Service', function () {
     expect(car).to.be.deep.equal({ id, ...reqCar });
   });
 
-  it('not exists car', async function () {
+  it('should not create a car', async function () {
     sinon.stub(Model, 'create').resolves(null);
 
     const carService = new CarService();
@@ -47,7 +47,7 @@ describe('Car Service', function () {
     expect(car).to.be.deep.equal(null);
   });
 
-  it('test method GET with function "findAll"', async function () {
+  it('should find all cars', async function () {
     sinon.stub(Model, 'find').resolves([{ id, ...reqCar }]);
 
     const carService = new CarService();
@@ -56,7 +56,7 @@ describe('Car Service', function () {
     expect(car).to.be.deep.equal([{ id, ...reqCar }]);
   });
 
-  it('test method GET with function "finById" when id exists', async function () {
+  it('should find a car by id when id exists', async function () {
     sinon.stub(Model, 'findOne').resolves({ id, ...reqCar });
 
     const carService = new CarService();
@@ -67,14 +67,14 @@ describe('Car Service', function () {
     expect(car).to.be.deep.equal({ status: 200, response });
   });
 
-  it('test method GET with function "finById" when id is not valid', async function () {
+  it('should find a car by id when id is not valid', async function () {
     const carService = new CarService();
     const car = await carService.findById('1');
 
     expect(car).to.be.deep.equal({ status: 422, response: invalid });
   });
 
-  it('test method GET with function "finById" when car  not exists', async function () {
+  it('should find a car by id when id does not exist', async function () {
     sinon.stub(Model, 'findOne').resolves(null);
 
     const carService = new CarService();
@@ -83,7 +83,7 @@ describe('Car Service', function () {
     expect(car).to.be.deep.equal({ status: 404, response: notFound });
   });
 
-  it('test method PUT with function "updateById" when id exists', async function () {
+  it('should find a car by id and update when id exists', async function () {
     sinon.stub(Model, 'findOneAndUpdate').resolves({ id, ...reqCar });
 
     const carService = new CarService();
@@ -99,14 +99,14 @@ describe('Car Service', function () {
       response: { id, ...reqCar } });
   });
 
-  it('test method PUT with function "updateById" when id is not valid', async function () {
+  it('should find a car by id and update when id is not valid', async function () {
     const carService = new CarService();
     const car = await carService.updateById('1', reqCar);
 
     expect(car).to.be.deep.equal({ status: 422, response: invalid });
   });
 
-  it('test method PUT with function "updateById" when car not exists', async function () {
+  it('should find a car by id and update when id does not exist', async function () {
     sinon.stub(Model, 'findOneAndUpdate').resolves(null);
 
     const carService = new CarService();
@@ -115,7 +115,7 @@ describe('Car Service', function () {
     expect(car).to.be.deep.equal({ status: 404, response: notFound });
   });
 
-  it('test method DELETE with function "deleteById" when id exists', async function () {
+  it('should find a car by id and delete when id exists', async function () {
     sinon.stub(Model, 'findOneAndDelete').resolves({ id, ...reqCar });
 
     const carService = new CarService();
@@ -131,14 +131,14 @@ describe('Car Service', function () {
       response: { id, ...reqCar } });
   });
 
-  it('test method DELETE with function "deleteById" when id is not valid', async function () {
+  it('should find a car by id and delete when id is not valid', async function () {
     const carService = new CarService();
     const car = await carService.deleteById('1');
 
     expect(car).to.be.deep.equal({ status: 422, response: invalid });
   });
 
-  it('test method DELETE with function "deleteById" when car not exists', async function () {
+  it('should find a car by id and delete when id does not exist', async function () {
     sinon.stub(Model, 'findOneAndDelete').resolves(null);
 
     const carService = new CarService();

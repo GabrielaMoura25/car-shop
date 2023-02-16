@@ -6,7 +6,7 @@ export default class MotorcycleController {
   private req: Request;
   private res: Response;
   private next: NextFunction;
-  private motorcycleService: MotorcycleService;
+  public motorcycleService: MotorcycleService;
 
   constructor(req: Request, res: Response, next: NextFunction) {
     this.req = req;
